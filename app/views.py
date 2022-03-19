@@ -5,13 +5,21 @@ Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
 
+from distutils.command.upload import upload
+
+import os
+from click import option
 from app import app, db, login_manager
-from flask import render_template, request, redirect, url_for, flash,session
+from flask import render_template, request, redirect, send_from_directory, url_for, flash,session
 from flask_login import login_user, logout_user, current_user, login_required
 # from app.forms import LoginForm
-from app.models import UserProfile
+from app.models import UserProfile, Property
 from werkzeug.security import check_password_hash
-
+from werkzeug.utils import secure_filename
+from app.forms import PropertiesForm, PropertyType
+from . import db
+import locale
+locale.setlocale( locale.LC_ALL, 'en_CA.UTF-8' ) 
 
 
 ###
@@ -29,7 +37,64 @@ def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
 
+@app.route('/properties')
+def properties():
+    """Renders a display of all the Properties"""
+    fetched_properties = Property.query.all()
 
+    return render_template('properties.html',properties = fetched_properties,locale = locale)
+    
+
+
+@app.route('/properties/create', methods=["GET", "POST"])
+def add_property():
+    """Renders the add property form"""
+    form = PropertiesForm()
+    form.propType.choices = [(option.value,option.name) for option in PropertyType]
+
+
+    if request.method == "POST":
+        if form.validate():
+            print("validated")
+            title = form.title.data
+            bedrooms = form.bedrooms.data
+            bathrooms  = form.bathrooms.data
+            location = form.location.data
+            price = form.price.data
+            type = form.propType.data
+            description = form.description.data
+            photo = form.photo.data
+            if photo.filename == '':
+                flash('No selected Photo')
+                print("No selected Photo")
+                return redirect(request.url)
+            
+            photoname = secure_filename(photo.filename)
+            # print(photoname)
+            # print(f"retirived title:{title},bedrooms:{bedrooms}, bathrooms:{bathrooms}, location:{location},type:{type}, descrip: {description}, price:{price}")
+            photo.save(os.path.join(app.config['UPLOAD_FOLDER'],photoname))
+
+            property = Property(title,bedrooms,bathrooms,location,price,PropertyType(type),description,photoname)
+            db.session.add(property)
+            db.session.commit()
+
+            flash("Property Added",'success')
+            return redirect(url_for('properties'))
+        else:
+            print(form.errors)
+    # else:      
+    #     flash_errors(form)
+    #     return redirect(request.url)
+
+
+    return render_template('new_property.html',form = form) 
+
+@app.route('/uploads/<filename>')
+def get_image(filename):
+    try:
+        return send_from_directory(os.path.join(os.getcwd(),app.config['UPLOAD_FOLDER']),filename)
+    except FileNotFoundError:
+        return "https://via.placeholder.com/150"
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

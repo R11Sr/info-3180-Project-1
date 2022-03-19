@@ -2,6 +2,7 @@ from datetime import date
 from . import db
 import enum
 from werkzeug.security import generate_password_hash
+from sqlalchemy import CheckConstraint
 
 
 class UserProfile(db.Model):
@@ -46,7 +47,7 @@ class UserProfile(db.Model):
 
 class PropertyType(enum.Enum):
     house = 'House'
-    apt = 'Apartment'
+    apartment = 'Apartment'
 
 
 class Property(db.Model):
@@ -55,13 +56,14 @@ class Property(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title= db.Column(db.String(80),nullable = False)
-    bedrooms =  db.Column(db.Numeric(4,1),nullable = False)
-    bathrooms =  db.Column(db.Numeric(4,1),nullable = False)
+    bedrooms =  db.Column(db.Numeric(4),nullable = False)
+    bathrooms =  db.Column(db.Numeric(4),nullable = False)
     location =  db.Column(db.String(128),nullable = False)
-    price =  db.Column(db.Numeric(11,2),nullable = False)
+    price =  db.Column(db.Numeric(12,2),nullable = False)
     type =  db.Column(db.Enum(PropertyType),nullable = False)
     description =  db.Column(db.String(2048))
     photo = db.Column(db.String(256))
+    __table_args__ = (CheckConstraint(price >=0, bathrooms >= 0,bedrooms >= 0),{})
 
     def __init__(self,title,bedrooms,bathrooms,location,price,type,description,photo):
         self.title = title

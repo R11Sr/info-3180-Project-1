@@ -1,0 +1,46 @@
+{% extends 'base.html'%}
+
+{%block main %}
+
+<div class="heading">
+    <h1>Properties</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+
+        {%for property in properties%}
+        {%if (loop.index -1) is not divisibleby 3 %}
+        <div class="col-4 pb-4">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{url_for('get_image',filename=property.photo)}}"
+                    alt="Image for {{property.title}}">
+                <div class="card-body">
+                    <h5 class="card-title">{{property.title}}</h5>
+                    <p class="card-text">{{locale.currency(property.price,grouping = True)}}</p>
+                    <a href="#" class="btn btn-primary">View Property</a>
+                </div>
+            </div>
+        </div>
+        {%else%}
+        <div class="w-100"></div>
+        <div class="col-4 pb-4">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{url_for('get_image',filename=property.photo)}}"
+                    alt="Image for {{property.title}}">
+                <div class="card-body">
+                    <h5 class="card-title">{{property.title}}</h5>
+                    <p class="card-text">{{locale.currency(property.price,grouping = True)}}</p>
+                    <a href="#" class="btn btn-primary">View Property</a>
+                </div>
+            </div>
+        </div>
+
+        {%endif%}
+
+        {%endfor%}
+    </div>
+</div>
+
+
+{%endblock%}
