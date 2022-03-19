@@ -82,19 +82,25 @@ def add_property():
             return redirect(url_for('properties'))
         else:
             print(form.errors)
-    # else:      
-    #     flash_errors(form)
-    #     return redirect(request.url)
+            flash(form.errors)
+            return redirect(request.url)
 
 
     return render_template('new_property.html',form = form) 
+
+@app.route('/property/<id>')
+def get_property(id):
+    property = Property.query.get(id)
+
+    return render_template('property.html',property = property)
+
 
 @app.route('/uploads/<filename>')
 def get_image(filename):
     try:
         return send_from_directory(os.path.join(os.getcwd(),app.config['UPLOAD_FOLDER']),filename)
     except FileNotFoundError:
-        return "https://via.placeholder.com/150"
+        return "https://via.placeholder.com/286"
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

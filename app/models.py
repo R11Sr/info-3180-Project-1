@@ -56,8 +56,8 @@ class Property(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title= db.Column(db.String(80),nullable = False)
-    bedrooms =  db.Column(db.Numeric(4),nullable = False)
-    bathrooms =  db.Column(db.Numeric(4),nullable = False)
+    bedrooms =  db.Column(db.Integer,nullable = False)
+    bathrooms =  db.Column(db.Integer,nullable = False)
     location =  db.Column(db.String(128),nullable = False)
     price =  db.Column(db.Numeric(12,2),nullable = False)
     type =  db.Column(db.Enum(PropertyType),nullable = False)
