@@ -11,28 +11,42 @@
 
         {%for property in properties%}
         {%if (loop.index -1) is not divisibleby 3 %}
-        <div class="col-4 pb-4">
+        <div class="col-3 pb-4">
             <div class="card" style="width: 18rem;">
                 <img class="card-img-top" src="{{url_for('get_image',filename=property.photo)}}"
-                    alt="Image for {{property.title}}">
+                    alt="Image for {{property.title}}" width="286" height="170">
                 <div class="card-body">
                     <h5 class="card-title">{{property.title}}</h5>
-                    <p class="card-text">{{locale.currency(property.price,grouping = True)}}</p>
-                    <a href="{{url_for('get_property',id = property.id)}}" class="btn btn-primary">View Property</a>
+                    <p class="pb-1">
+
+                        <span class="text-muted"><i class="fa-solid fa-location-dot"></i>{{property.location}}</span>
+                    </p>
+                    <p class="card-text pb-2"><span class="elongated-div"><span
+                                class="text-white price">{{locale.currency(property.price,grouping =
+                                True)}}</span></span></p>
                 </div>
+                <a href="{{url_for('get_property',id = property.id)}}" class="text-white view-property btn">View
+                    Property</a>
+
             </div>
         </div>
         {%else%}
         <div class="w-100"></div>
-        <div class="col-4 pb-4">
+        <div class="col-3 pb-4">
             <div class="card" style="width: 18rem;">
                 <img class="card-img-top" src="{{url_for('get_image',filename=property.photo)}}"
-                    alt="Image for {{property.title}}">
+                    alt="Image for {{property.title}}" width="286" height="170">
                 <div class="card-body">
                     <h5 class="card-title">{{property.title}}</h5>
-                    <p class="card-text">{{locale.currency(property.price,grouping = True)}}</p>
-                    <a href="{{url_for('get_property',id = property.id)}}" class="btn btn-primary">View Property</a>
+                    <p class=" pb-1">
+                        <span class="text-muted"><i class="fa-solid fa-location-dot"></i>{{property.location}}</span>
+                    </p>
+                    <p class="card-text pb-2"><span class="elongated-div"><span
+                                class="text-white price">{{locale.currency(property.price,grouping =
+                                True)}}</span></span></p>
                 </div>
+                <a href="{{url_for('get_property',id = property.id)}}" class="text-white view-property btn">View
+                    Property</a>
             </div>
         </div>
 

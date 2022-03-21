@@ -92,7 +92,7 @@ def add_property():
 def get_property(id):
     property = Property.query.get(id)
 
-    return render_template('property.html',property = property)
+    return render_template('property.html',property = property,locale = locale)
 
 
 @app.route('/uploads/<filename>')

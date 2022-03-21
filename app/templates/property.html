@@ -2,31 +2,44 @@
 
 {%block main%}
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <img src="{{url_for('get_image',filename=property.photo)}}" class="h-100 d-inline-block" 
-            alt="Image for {{property.title}}" width="400px"  >
-        </div>
-        <div class="col">
-                <div class="h3">{{property.title}}</div>
-                <div class="d-flex flex-row">
-                    <div class="p-2">{{property.price}}</div>
-                    <div class="p-2">{{property.type}}</div>
+<div class="container col-md-8">
+    <div class="wrapper">
+        <div class="row">
+            <div class="col">
+                <img src="{{url_for('get_image',filename=property.photo)}}" class="h-100 d-inline-block" id="full-property-image"
+                    alt="Image for {{property.title}}" width="400px">
+            </div>
+            <div class="col">
+                <div class="container p-2">
+                    <div class="h3">{{property.title}}</div>
+                    <div class="d-flex flex-row pb-3">
+                        <div class="p-2"><span class="elongated-div"><span
+                                    class="text-white price">{{locale.currency(property.price,grouping = True)}}</span></span>
+                        </div>
+                        <div class="p-2"><span class="property-type"><span
+                                    class="text-white price">{{property.get_type()}}</span></span></div>
+                    </div>
+                    <div class="pb-3">
+                        {{property.description}}
+                    </div>
+                    <div class="d-flex flex-row pb-3">
+                        <div class="p-2">
+                            <i class="fa-solid fa-bed" aria-hidden="true"></i>
+                            {{property.bedrooms}} Bedrooms
+                        </div>
+                        <div class="p-2">
+                            <i class="fa fa-bath" aria-hidden="true"></i>
+                            {{property.bathrooms}} Bathrooms
+                        </div>
+                    </div>
+        
+                    <div class="pb-4"><i class="fa-solid fa-location-dot " aria-hidden="true"></i>
+                        {{property.location}}
+                    </div>
+        
+                    <a href="#" class="btn text-white email-realtor">Email Realtor</a>
                 </div>
-                <div class="">
-                    {{property.description}}
-                </div>
-                <div class="d-flex flex-row">
-                    <div class="p-2">{{property.bedrooms}} Bedrooms</div>
-                    <div class="p-2">{{property.bathrooms}} Bathrooms </div>
-                </div>
-
-                <div class="">
-                    {{property.location}}
-                </div>
-
-                <a href="#" class="btn btn-primary">Email Realtor</a>
+            </div>
         </div>
     </div>
 </div>

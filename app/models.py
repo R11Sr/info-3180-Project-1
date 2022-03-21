@@ -74,6 +74,13 @@ class Property(db.Model):
         self.type = type
         self.description = description
         self.photo = photo
+        
 
-        def __repr__(self):
-            return f"<id: {self.id}, title: {self.title}, location: {self.location}>"
+    def get_type(self):
+        type = str(self.type).split('.')
+        return type[1]
+        
+    def __repr__(self):
+        return f"<id: {self.id}, title: {self.title}, location: {self.location}>"
+        
+        
