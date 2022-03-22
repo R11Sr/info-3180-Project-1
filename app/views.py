@@ -72,7 +72,7 @@ def add_property():
             photoname = secure_filename(photo.filename)
             # print(photoname)
             # print(f"retirived title:{title},bedrooms:{bedrooms}, bathrooms:{bathrooms}, location:{location},type:{type}, descrip: {description}, price:{price}")
-            photo.save(os.path.join(app.config['UPLOAD_FOLDER'],photoname))
+            photo.save(str(os.path.join(app.config['UPLOAD_FOLDER'],photoname)))
 
             property = Property(title,bedrooms,bathrooms,location,price,PropertyType(type),description,photoname)
             db.session.add(property)
