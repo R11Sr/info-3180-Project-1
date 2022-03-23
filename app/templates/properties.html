@@ -12,7 +12,7 @@
         {%for property in properties%}
         {%if (loop.index -1) is not divisibleby 3 %}
         <div class="col-3 pb-4">
-            <div class="card" style="width: 18rem;">
+            <div class="card" >
                 <img class="card-img-top" src="{{url_for('get_image',filename=property.photo)}}"
                     alt="Image for {{property.title}}" width="286" height="170">
                 <div class="card-body">
@@ -33,7 +33,7 @@
         {%else%}
         <div class="w-100"></div>
         <div class="col-3 pb-4">
-            <div class="card" style="width: 18rem;">
+            <div class="card" >
                 <img class="card-img-top" src="{{url_for('get_image',filename=property.photo)}}"
                     alt="Image for {{property.title}}" width="286" height="170">
                 <div class="card-body">
